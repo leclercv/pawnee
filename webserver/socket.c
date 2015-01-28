@@ -1,7 +1,15 @@
 #include "socket.h"
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 int creer_serveur (int port ) {
 
+	int value = port;
 	int socket_serveur ;
 
 
@@ -15,7 +23,7 @@ int creer_serveur (int port ) {
 
 
 
-	if(socket_serveur = socket ( AF_INET , SOCK_STREAM , 0)) == -1){
+	if((socket_serveur = socket (AF_INET, SOCK_STREAM, 0)) == -1){
 		perror("socket serveur");
 		return -1;
 	}
@@ -51,6 +59,6 @@ int creer_serveur (int port ) {
 		
 
 	}
-	}
-	return 0;
+	
+	return value;
 }
