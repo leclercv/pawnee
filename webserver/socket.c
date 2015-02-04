@@ -11,10 +11,8 @@ int creer_serveur (int port ) {
 
 	int value = port;
 	int socket_serveur ;
-
-
-
-
+	int optval = 1;
+	char message_client[256];
 
 	 struct sockaddr_in saddr ;
 	saddr . sin_family = AF_INET ; /* Socket ipv4 */
@@ -34,6 +32,10 @@ int creer_serveur (int port ) {
 	}
 	/* Utilisation de la socket serveur */
 
+	
+	if ( setsockopt ( socket_serveur , SOL_SOCKET , SO_REUSEADDR , & optval , sizeof ( int )) == -1){
+		perror ( " Can not set SO_REUSEADDR option " );
+	}
 
 	if ( bind ( socket_serveur , (struct sockaddr *)& saddr , sizeof( saddr )) == -1){
 		perror ( " bind socker_serveur " );
@@ -57,8 +59,10 @@ int creer_serveur (int port ) {
 		/* On peut maintenant dialoguer avec le client */
 		sleep(5);
 		write (socket_client,message_bienvenue,strlen(message_bienvenue));
+		while(read > 0){
+			write(clientfd, message_client, retfd);		
+		}
 
 	}
-	
 	return value;
 }

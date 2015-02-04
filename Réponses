@@ -1,0 +1,15 @@
+III
+
+1)La socket reste toujours utilisée, nous ne pouvons pas relancer le serveur tout de suite
+
+2)Avec un délai d'attente, le client ne parvient pas à se connecter au serveur lorqu'on utilise l'option "-z".
+
+3)La connection nous est refusée car notre serveur ne gère pas les adressses ipv6
+
+4)
+
+IV
+
+1)
+
+2)
