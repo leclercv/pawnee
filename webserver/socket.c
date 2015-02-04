@@ -18,7 +18,7 @@ int creer_serveur (int port ) {
 
 	 struct sockaddr_in saddr ;
 	saddr . sin_family = AF_INET ; /* Socket ipv4 */
-	saddr . sin_port = htons (8000); /* Port d ’ écoute */
+	saddr . sin_port = htons (8080); /* Port d ’ écoute */
 	saddr . sin_addr . s_addr = INADDR_ANY ; /* écoute sur toutes les interfaces */
 
 
@@ -54,9 +54,8 @@ int creer_serveur (int port ) {
 			perror ("accept");
 		}
 		/* On peut maintenant dialoguer avec le client */
+		sleep(1);
 		write (socket_client,message_bienvenue,strlen(message_bienvenue));
-
-		
 
 	}
 	
