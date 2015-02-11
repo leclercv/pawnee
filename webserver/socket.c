@@ -12,26 +12,24 @@ int creer_serveur (int port ) {
 	int value = port;
 	int socket_serveur ;
 	int optval = 1;
-	char message_client[256];
+	int toto;
+	char buff[256];
+	pid_t pid = 0;
 
 	 struct sockaddr_in saddr ;
 	saddr . sin_family = AF_INET ; /* Socket ipv4 */
 	saddr . sin_port = htons (8000); /* Port d ’ écoute */
 	saddr . sin_addr . s_addr = INADDR_ANY ; /* écoute sur toutes les interfaces */
 
-
-
 	if((socket_serveur = socket (AF_INET, SOCK_STREAM, 0)) == -1){
 		perror("socket serveur");
 		return -1;
 	}
 
-
 	if ( socket_serveur == -1){
 		perror ( " socket_serveur " ); /* traitement de l ’ erreur */
 	}
 	/* Utilisation de la socket serveur */
-
 	
 	if ( setsockopt ( socket_serveur , SOL_SOCKET , SO_REUSEADDR , & optval , sizeof ( int )) == -1){
 		perror ( " Can not set SO_REUSEADDR option " );
@@ -46,7 +44,7 @@ int creer_serveur (int port ) {
 		perror ( " listen socket_serveur " );
 	/* traitement d ’ erreur */
 	}
-	const char * message_bienvenue = "Bonjour, bienvenue sur mon serveur!\n" ;
+	const char * message_bienvenue = "PANZANI SAUCISSE!\n" ;
 
 	while(1){
 
@@ -57,12 +55,23 @@ int creer_serveur (int port ) {
 			perror ("accept");
 		}
 		/* On peut maintenant dialoguer avec le client */
-		sleep(5);
+		sleep(2);
 		write (socket_client,message_bienvenue,strlen(message_bienvenue));
-		while(read > 0){
-			write(clientfd, message_client, retfd);		
+		while(1){
+			toto = read(socket_client,&buff,256);
+			if(toto==-1){
+				close(socket_client);
+	  			return 0;
+			}
+			toto = write(socket_client,buff,toto);
+			if(toto==-1 || toto==0){
+	  			close(socket_client);
+	  			return 0;
+			}
+    			else if(pid<0){
+     				 perror("pid");
+    			}
 		}
-
+		return value;
 	}
-	return value;
 }
