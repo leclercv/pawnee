@@ -6,7 +6,7 @@ III
 
 3)La connection nous est refusée car notre serveur ne gère pas les adressses ipv6
 
-4)
+4)Le deuxieme client attend la déconnection du premier, on a donc un seul client a la fois
 
 IV
 

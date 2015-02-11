@@ -6,4 +6,5 @@ doit pouvoir être utilisée directement par un appel à accept .
 La fonction retourne -1 en cas d ’ erreur ou le descripteur de la
 socket créée . */
 int creer_serveur (int port );
+int setsockopt ( int socket , int level , int option_name ,const void * option_value , socklen_t option_len )
 # endif

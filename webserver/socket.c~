@@ -44,7 +44,7 @@ int creer_serveur (int port ) {
 		perror ( " listen socket_serveur " );
 	/* traitement d ’ erreur */
 	}
-	const char * message_bienvenue = "Bonjour, bienvenue sur mon serveur!\n" ;
+	const char * message_bienvenue = "PANZANI SAUCISSE!\n" ;
 
 	while(1){
 
