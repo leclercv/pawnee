@@ -7,11 +7,24 @@
 #include <string.h>
 #include <stdlib.h>
 #include <signal.h>
+ #include <sys/wait.h>
 
 void initialiser_signaux ( void ){
 	if ( signal ( SIGPIPE , SIG_IGN ) == SIG_ERR ){
-		perror ( " signal " );
+		perror ("signal");
 	}
+	struct sigaction sa ;
+		sa . sa_handler = traitement_signal ;
+		sigemptyset (& sa . sa_mask );
+		sa . sa_flags = SA_RESTART ;
+	if ( sigaction ( SIGCHLD , & sa , NULL ) == -1){
+		perror("erreur signal handler");
+	}
+}
+
+void traitement_signal ( int sig ){
+	printf ("Signal %d reçu \n",sig);
+	wait(NULL);
 }
 
 int creer_serveur (int port ) {
@@ -66,7 +79,7 @@ int creer_serveur (int port ) {
 		/* On peut maintenant dialoguer avec le client */
 		sleep(2);
 		write (socket_client,message_bienvenue,strlen(message_bienvenue));
-		if(fork() == 0){
+		if(fork() != 0){
 			close(socket_client);
 		}
 		else{
@@ -85,6 +98,7 @@ int creer_serveur (int port ) {
 	     				 perror("pid");
 	    			}
 			}
+			exit(1);
 		}	
 	}
 	return value;
