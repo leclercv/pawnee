@@ -66,21 +66,26 @@ int creer_serveur (int port ) {
 		/* On peut maintenant dialoguer avec le client */
 		sleep(2);
 		write (socket_client,message_bienvenue,strlen(message_bienvenue));
-		while(1){
-			toto = read(socket_client,&buff,256);
-			if(toto==-1){
-				close(socket_client);
-				break;
+		if(fork() == 0){
+			close(socket_client);
+		}
+		else{
+			while(1){
+				toto = read(socket_client,&buff,256);
+				if(toto==-1){
+					close(socket_client);
+					break;
+				}
+				toto = write(socket_client,buff,toto);
+				if(toto==-1 || toto==0){
+		  			close(socket_client);
+					break;
+				}
+	    			else if(pid<0){
+	     				 perror("pid");
+	    			}
 			}
-			toto = write(socket_client,buff,toto);
-			if(toto==-1 || toto==0){
-	  			close(socket_client);
-				break;
-			}
-    			else if(pid<0){
-     				 perror("pid");
-    			}
 		}	
 	}
-return value;
+	return value;
 }
