@@ -6,9 +6,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <signal.h>
+
+void initialiser_signaux ( void ){
+	if ( signal ( SIGPIPE , SIG_IGN ) == SIG_ERR ){
+		perror ( " signal " );
+	}
+}
 
 int creer_serveur (int port ) {
-
+	
 	int value = port;
 	int socket_serveur ;
 	int optval = 1;
@@ -16,10 +23,12 @@ int creer_serveur (int port ) {
 	char buff[256];
 	pid_t pid = 0;
 
-	 struct sockaddr_in saddr ;
-	saddr . sin_family = AF_INET ; /* Socket ipv4 */
+	struct sockaddr_in saddr;
+	saddr . sin_family = AF_INET; /* Socket ipv4 */
 	saddr . sin_port = htons (8000); /* Port d ’ écoute */
-	saddr . sin_addr . s_addr = INADDR_ANY ; /* écoute sur toutes les interfaces */
+	saddr . sin_addr . s_addr = INADDR_ANY; /* écoute sur toutes les interfaces */
+
+	initialiser_signaux();
 
 	if((socket_serveur = socket (AF_INET, SOCK_STREAM, 0)) == -1){
 		perror("socket serveur");
@@ -61,17 +70,17 @@ int creer_serveur (int port ) {
 			toto = read(socket_client,&buff,256);
 			if(toto==-1){
 				close(socket_client);
-	  			return 0;
+				break;
 			}
 			toto = write(socket_client,buff,toto);
 			if(toto==-1 || toto==0){
 	  			close(socket_client);
-	  			return 0;
+				break;
 			}
     			else if(pid<0){
      				 perror("pid");
     			}
-		}
-		return value;
+		}	
 	}
+return value;
 }
