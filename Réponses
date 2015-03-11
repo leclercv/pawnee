@@ -1,3 +1,5 @@
+Fiche réponse Leclercq Vincent - Antoine Place
+
 III
 
 1)La socket reste toujours utilisée, nous ne pouvons pas relancer le serveur tout de suite
@@ -17,7 +19,6 @@ GET / HTTP/1.1
 User-Agent: curl/7.26.0
 Host: localhost:8000
 Accept: */*
-
 
 2) Par exemple sur la ligne GET / HTTP/1.1 on a respectivement la méthode, l'emplacement, et le protocole utilisé
 
