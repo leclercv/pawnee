@@ -6,10 +6,11 @@ III
 
 3)La connection nous est refusée car notre serveur ne gère pas les adressses ipv6
 
-4)
+4)Le deuxieme client attend la déconnection du premier, on a donc un seul client a la fois
 
 IV
 
 1)
 
-2)
+2) Par exemple sur la ligne GET / HTTP/1.1 on a respectivement la méthode, l'emplacement, et le protocole utilisé
+
